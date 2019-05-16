@@ -1,0 +1,40 @@
+﻿@model TopLearn.ViewModel.UserViewModels.UserRegisterViewModel
+
+@{
+    ViewData["Title"] = "ثبت نام کاربر";
+    Layout = "~/Views/Shared/_RegisterAndLoginLayout.cshtml";
+}
+<div class="loginView">
+    <form asp-controller="Account" asp-action="Register" method="post">
+        <div class="control-group">
+            <label class="control-label hidden shown-ie8" for="inputUsernameRegister">نام کاربری</label>
+            <div class="controls">
+                <input type="email" asp-for="UserEmail" class="input-block-level" id="UserEmail" name="UserEmail" placeholder="ایمیل">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label hidden shown-ie8" for="inputEmailRegister">ایمیل</label>
+            <div class="controls">
+                <input asp-for="UserPassword" type="password" class="input-block-level" id="UserPassword" name="UserPassword" placeholder="کلمه عبور">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label hidden shown-ie8" for="inputPasswordRegister">رمز عبور</label>
+            <div class="controls">
+                <input asp-for="UserConfigortionPassword" type="password" class="input-block-level" id="UserConfigortionPassword" name="UserConfigortionPassword" placeholder="تکرار کلمه عبور">
+            </div>
+        </div>
+        <div asp-validation-summary="All" class="text-error">
+
+        </div>
+        <button type="submit" class="btn btn-danger input-block-level bold higher">
+            ثبت نام
+        </button>
+    </form>
+    <p class="center-align push-down-0">
+        <a data-toggle="modal" role="button" href="#loginModal" data-dismiss="modal">قبلا ثبت نام کرده اید؟</a>
+    </p>
+
+</div>
+
+<partial name="_LoginModal" />

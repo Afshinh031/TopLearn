@@ -1,0 +1,67 @@
+﻿
+<!DOCTYPE html>
+<!--[if lt IE 8]>      <html class="no-js lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <partial name="_Meta" />
+    <title>@ViewData["Title"]</title>
+
+    <partial name="_Style" />
+
+
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch/144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch/114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch/72.png">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch/57.png">
+    <link rel="shortcut icon" href="/images/apple-touch/57.png">
+</head>
+
+
+<body class="">
+
+    <div class="master-wrapper">
+
+        <!--  ==========  -->
+        <!--  = Header =  -->
+        <!--  ==========  -->
+        <partial name="_Header" />
+
+        <!--  ==========  -->
+        <!--  = Main Menu / navbar =  -->
+        <!--  ==========  -->
+        <partial name="_Navbar" />
+        <!-- /main menu -->
+        <!--  ==========  -->
+        <!--  = Slider Revolution =  -->
+        <!--  ==========  -->
+        <!-- /slider revolution -->
+        <!---body---->
+        <br />
+        @RenderBody()
+        <!---/body---->
+        <!--  ==========  -->
+        <!--  = Footer =  -->
+        <!--  ==========  -->
+        <partial name="_Footer" />
+        <!-- /footer -->
+        <!--  ==========  -->
+        <!--  = Modal Windows =  -->
+        <!--  ==========  -->
+        <!--  = Login =  -->
+    </div> <!-- end of master-wrapper -->
+    <!--  ==========  -->
+    <!--  = FB =  -->
+
+    <div id="fb-root"></div>
+    <!--  = JavaScript =  -->
+    <partial name="_Scripts" />
+    @RenderSection("scripts", false)
+    <!--  ==========  -->
+</body>
+</html>

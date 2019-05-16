@@ -1,0 +1,49 @@
+﻿@model TopLearn.ViewModel.UserViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "ورود کاربر";
+    Layout = "~/Views/Shared/_RegisterAndLoginLayout.cshtml";
+}
+<div class="loginView">
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <div class="control-group">
+            <label class="control-label hidden shown-ie8" for="inputEmail">نام کاربری</label>
+            <div class="controls">
+                <input asp-for="UserEmail" class="input-block-level" id="inputEmail" placeholder="نام کاربری یا ایمیل">
+            </div>
+            <span asp-validation-for="UserEmail"></span>
+        </div>
+        <div class="control-group">
+            <label class="control-label hidden shown-ie8" for="inputPassword">رمز عبور</label>
+            <div class="controls">
+                <input asp-for="UserPassword" type="password" class="input-block-level" id="inputPassword" placeholder="رمز عبور">
+            </div>
+            <span asp-validation-for="UserPassword"></span>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <input style="display: inline-block;" asp-for="RemmeberMe" id="RemmeberMe" type="checkbox">
+                <label style="display: inline-block;" for="RemmeberMe" class="checkbox">
+                    مرا به خاطر بسپار
+                </label>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary input-block-level bold higher">
+            ورود
+        </button>
+    </form>
+    <p class="right-align push-down-0">
+        <a data-toggle="modal" role="button" href="/Register/" data-dismiss="modal"> ثبت نام </a>
+        <br />
+        <a href="#" data-dismiss="modal">رمز عبورتان را فراموش کرده اید؟</a>
+    </p>
+</div>
+
+<br />
+<br />
+
+@section scripts{
+    <script type="text/javascript">
+        $("#reg_section").remove();
+    </script>
+}

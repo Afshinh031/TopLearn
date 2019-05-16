@@ -1,0 +1,23 @@
+﻿@model TopLearn.ViewModel.UserViewModels.UserRegisterViewModel
+@{
+    ViewData["Title"] = "پایان ثبت نام";
+    Layout = "~/Views/Shared/_RegisterAndLoginLayout.cshtml";
+}
+<div class="container">
+    <br />
+    <br />
+    <div class="alert alert-success">
+        <p>ثبت نام شما انجام شد ، ایمیلی حاوی لینک فعالسازی به ایمیمل "@Model.UserEmail" ارسال شد .</p>
+        <p>جهت ادامه ثبت نام وارد ایمیل خود شوید و روی لینک کلیک کنید .</p>
+        <p>جهت ورود به سایت روی این <a href="/Login/">لینک</a>کلیک کنید</p>
+    </div>
+    <br />
+    <br />
+    <br />
+</div>
+@section scripts{ 
+    <script type="text/javascript">
+        $("#reg_section").remove();
+    </script>
+}
+

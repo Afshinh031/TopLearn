@@ -1,0 +1,41 @@
+﻿@model TopLearn.ViewModel.UserViewModels.UserRegisterViewModel
+
+
+<div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="registerModalLabel"><span class="light">ثبت نام</span> در وب مارکت</h3>
+    </div>
+    <div class="modal-body">
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <div class="control-group">
+                <label class="control-label hidden shown-ie8" for="inputUsernameRegister">نام کاربری</label>
+                <div class="controls">
+                    <input type="email" asp-for="UserEmail" class="input-block-level" id="UserEmail" name="UserEmail" placeholder="ایمیل">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label hidden shown-ie8" for="inputEmailRegister">کلمه عبور</label>
+                <div class="controls">
+                    <input asp-for="UserPassword" type="password" class="input-block-level" id="UserPassword" name="UserPassword" placeholder="کلمه عبور">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label hidden shown-ie8" for="inputPasswordRegister">رمز عبور</label>
+                <div class="controls">
+                    <input asp-for="UserConfigortionPassword" type="password" class="input-block-level" id="UserConfigortionPassword" name="UserConfigortionPassword" placeholder="تکرار کلمه عبور">
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-error">
+
+            </div>
+            <button type="submit" class="btn btn-danger input-block-level bold higher">
+                ثبت نام
+            </button>
+        </form>
+        <p class="center-align push-down-0">
+            <a data-toggle="modal" role="button" href="#loginModal" data-dismiss="modal">قبلا ثبت نام کرده اید؟</a>
+        </p>
+
+    </div>
+</div>

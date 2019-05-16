@@ -1,0 +1,42 @@
+﻿@model TopLearn.ViewModel.UserViewModels.LoginViewModel
+
+<div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="loginModalLabel"><span class="light">ورود</span> در وب مارکت</h3>
+    </div>
+    <div class="modal-body">
+        <form method="post" asp-controller="Account" asp-action="Login">
+            <div class="control-group">
+                <label class="control-label hidden shown-ie8" for="inputEmail">نام کاربری</label>
+                <div class="controls">
+                    <input asp-for="UserEmail" class="input-block-level" id="inputEmail" placeholder="نام کاربری یا ایمیل">
+                </div>
+                <span asp-validation-for="UserEmail"></span>
+            </div>
+            <div class="control-group">
+                <label class="control-label hidden shown-ie8" for="inputPassword">رمز عبور</label>
+                <div class="controls">
+                    <input asp-for="UserPassword" type="password" class="input-block-level" id="inputPassword" placeholder="رمز عبور">
+                </div>
+                <span asp-validation-for="UserPassword"></span>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox">
+                        <input asp-for="RemmeberMe" type="checkbox">
+                        مرا به خاطر بسپار
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary input-block-level bold higher">
+                ورود
+            </button>
+        </form>
+        <p class="right-align push-down-0">
+            <a data-toggle="modal" role="button" href="#registerModal" data-dismiss="modal"> ثبت نام </a>
+            <br />
+            <a href="#" data-dismiss="modal">رمز عبورتان را فراموش کرده اید؟</a>
+        </p>
+    </div>
+</div>
