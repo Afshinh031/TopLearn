@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopLearn.DataLayer", "TopLe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopLearn.Core", "TopLearn.Core\TopLearn.Core.csproj", "{C983AA2D-5E50-46A5-B0AB-FEFB9A239F7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopLearn.ViewModel", "TopLearn.ViewModel\TopLearn.ViewModel.csproj", "{1CFCC4DB-F661-4339-99BA-0BE1A349B9E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopLearn.ViewModel", "TopLearn.ViewModel\TopLearn.ViewModel.csproj", "{1CFCC4DB-F661-4339-99BA-0BE1A349B9E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopLearn.Utility", "TopLearn.Utility\TopLearn.Utility.csproj", "{EDD28183-50B4-4402-851C-5247B269E52D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopLearn.Utility", "TopLearn.Utility\TopLearn.Utility.csproj", "{EDD28183-50B4-4402-851C-5247B269E52D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

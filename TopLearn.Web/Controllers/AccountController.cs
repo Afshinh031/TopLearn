@@ -16,7 +16,8 @@ using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
-
+using TopLearn.Utility.Convertor;
+using TopLearn.Utility.Sender;
 
 namespace TopLearn.Web.Controllers
 {
@@ -26,10 +27,12 @@ namespace TopLearn.Web.Controllers
 
         private IUserRepository _userRepository;
         private IUserService _userService;
-        public AccountController(IUserService userService, IUserRepository userRepository)
+        private IViewRenderService _viewRenderService;
+        public AccountController(IUserService userService, IUserRepository userRepository, IViewRenderService viewRenderService)
         {
             _userService = userService;
             _userRepository = userRepository;
+            _viewRenderService = viewRenderService;
         }
         public IActionResult Index()
         {
@@ -38,8 +41,8 @@ namespace TopLearn.Web.Controllers
 
         #region Register
         [Route("Register")]
-        public IActionResult Register()=> View();
- 
+        public IActionResult Register() => View();
+
         [Route("Register")]
         [HttpPost]
         public IActionResult Register(UserRegisterViewModel userRegisterViewModel)
@@ -64,7 +67,7 @@ namespace TopLearn.Web.Controllers
                 userRegisterViewModel.UserConfigortionPassword = null;
                 return View(userRegisterViewModel);
             }
-          
+
             if (_userService.EmialIsExist(userRegisterViewModel.UserEmail))
             {
                 ModelState.AddModelError("UserEmail", "ایمیل معتبر نمی باشد");
@@ -86,16 +89,38 @@ namespace TopLearn.Web.Controllers
                 UserPassword = userRegisterViewModel.UserPassword.ToEncodePasswordMd5(),
                 UserEmail = userRegisterViewModel.UserEmail.FixEmail(),
             };
-            if ((_userRepository.InsertUser(user)))
+            if (!(_userRepository.InsertUser(user)))
             {
-                _userRepository.SaveUser();
-                return View("RegisterSuccess", userRegisterViewModel);
+                ModelState.AddModelError("UserEmail", "خطا در ثبت اطلاعات");
+                userRegisterViewModel.UserPassword = null;
+                userRegisterViewModel.UserConfigortionPassword = null;
+                return View(userRegisterViewModel);
             }
-            ModelState.AddModelError("UserEmail", "خطا در ثبت اطلاعات");
-            userRegisterViewModel.UserPassword = null;
-            userRegisterViewModel.UserConfigortionPassword = null;
-            return View(userRegisterViewModel);
+
+            _userRepository.SaveUser();
+            string emailBody = _viewRenderService.RenderToStringAsync("_ActiveCodeEmail", user);
+            string send = SendEmail.Send(user.UserEmail, "کد فعال سازی حساب کاربری", emailBody);
+            return View("RegisterSuccess", userRegisterViewModel);
         }
+
+        [Route("ActiveAccount/{activeCode}")]
+        public ActionResult ActiveAccount(string activeCode)
+        {
+            
+            var user = _userService.GetUserByActiveCode(activeCode);
+            if (user == null)
+                return View("ActiveCodeNotFound");
+            user.UserEmailConfigurationCode = TextTools.GenerateUniqCode();
+            user.UserIsActive = true;
+            user.UserEmailConfigurationDateTime = DateTime.Now;
+            if (_userRepository.UpdateUser(user)) {
+                _userRepository.SaveUser();
+                return View();
+            }
+            return Redirect("/");
+        }
+
+
         #endregion
 
         #region Login
@@ -113,7 +138,8 @@ namespace TopLearn.Web.Controllers
                 loginViewModel.UserPassword = null;
                 return View(loginViewModel);
             }
-            if (_userService.LoginUser(loginViewModel)) {
+            if (_userService.LoginUser(loginViewModel))
+            {
                 var user = _userService.GetUserByEmail(loginViewModel.UserEmail);
                 var claims = new List<Claim>() {
                     new Claim(ClaimTypes.NameIdentifier,user.UserID.ToString()),
@@ -122,7 +148,7 @@ namespace TopLearn.Web.Controllers
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
 
-                var properties =new AuthenticationProperties
+                var properties = new AuthenticationProperties
                 {
                     IsPersistent = loginViewModel.RemmeberMe
                 };

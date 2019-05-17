@@ -11,6 +11,7 @@ namespace TopLearn.Core.Services.Interfaces
         User GetUserById(int userId);
         bool EmialIsExist(string email);
         User GetUserByEmail(string email);
+        User GetUserByActiveCode(string activeCode);
         bool LoginUser(LoginViewModel login);
         void DisposeUser();
     }

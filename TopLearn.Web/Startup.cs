@@ -13,6 +13,7 @@ using TopLearn.Core.Services;
 using TopLearn.Core.Services.Interfaces;
 using TopLearn.Core.Services.Service;
 using TopLearn.DataLayer.Context;
+using TopLearn.Utility.Convertor;
 
 namespace TopLearn.Web
 {
@@ -62,6 +63,7 @@ namespace TopLearn.Web
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IViewRenderService, RenderViewToString>();
 
             #endregion
         }

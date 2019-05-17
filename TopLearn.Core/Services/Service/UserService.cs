@@ -44,6 +44,11 @@ namespace TopLearn.Core.Services.Service
         {
             return _context.Users.Where(u => u.UserEmail == email).Single();
         }
+
+        public User GetUserByActiveCode(string activeCode)
+        {
+            return _context.Users.SingleOrDefault(u => u.UserEmailConfigurationCode == activeCode);
+        }
     }
 
 
