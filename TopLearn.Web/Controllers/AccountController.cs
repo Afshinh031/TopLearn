@@ -236,5 +236,15 @@ namespace TopLearn.Web.Controllers
             return View("ResetPasswordSucsses");
         }
         #endregion
+
+        #region Logout
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/Login");
+        }
+
+        #endregion
     }
 }
