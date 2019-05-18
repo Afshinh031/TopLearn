@@ -1,0 +1,48 @@
+﻿@model TopLearn.DataLayer.Entities.User.User
+@{
+    ViewData["Title"] = "ActiveAccount";
+    Layout = "~/Views/Shared/_RegisterAndLoginLayout.cshtml";
+}
+
+<br />
+<br />
+<br />
+<br />
+@if (Model != null)
+{
+    <div class="container">
+        <div class=" row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-success">
+                    <p>کاربرگرامی وب مارکت با تشکر از ثبت نام شما</p>
+                    <p>حساب کاربری شما فعال شده</p>
+                    <p> میتوانید برای تکمیل اطلاعات خود به پروفایلتان در سایت مراجعه کنید</p>
+                    <p>جهت ورود به سایت روی این <a href="/Login/">لینک</a>کلیک کنید</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class=" row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-danger">
+                    <p>شما در سایت ثبت نام نکرده اید</p>
+                    <p>برای ثبت نام در سایت روی این <a href="/Register">لینک</a>کلیک کنید</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<br />
+<br />
+<br />
+<br />
+
+@section scripts{
+    <script type="text/javascript">
+        $("#reg_section").remove();
+    </script>
+}

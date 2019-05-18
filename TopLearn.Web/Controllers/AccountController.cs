@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using TopLearn.Core.Services.Interfaces;
-using TopLearn.Core.Services.Service;
-using TopLearn.DataLayer.Context;
+using TopLearn.Utility.Convertor;
 using TopLearn.Utility.Hasher;
+using TopLearn.Utility.Sender;
 using TopLearn.Utility.TextTools;
 using TopLearn.ViewModel.UserViewModels;
-using static System.Net.Mime.MediaTypeNames;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity.UI.Pages.Account.Internal;
-using TopLearn.Utility.Convertor;
-using TopLearn.Utility.Sender;
 
 namespace TopLearn.Web.Controllers
 {
@@ -98,24 +90,26 @@ namespace TopLearn.Web.Controllers
             }
 
             _userRepository.SaveUser();
-            string emailBody = _viewRenderService.RenderToStringAsync("_ActiveCodeEmail", user);
-            string send = SendEmail.Send(user.UserEmail, "کد فعال سازی حساب کاربری", emailBody);
+            string send = SendEmail.Send(user.UserEmail, "کد فعال سازی حساب کاربری", _viewRenderService.RenderToStringAsync("_ActiveCodeEmail", user));
+            if (send != "1")
+                return Content("خطا در ارسال ایمیل فعال سازی با پشتیبانی تماس بگیرید");
             return View("RegisterSuccess", userRegisterViewModel);
         }
 
         [Route("ActiveAccount/{activeCode}")]
         public ActionResult ActiveAccount(string activeCode)
         {
-            
+
             var user = _userService.GetUserByActiveCode(activeCode);
             if (user == null)
-                return View("ActiveCodeNotFound");
+                return View();
             user.UserEmailConfigurationCode = TextTools.GenerateUniqCode();
             user.UserIsActive = true;
             user.UserEmailConfigurationDateTime = DateTime.Now;
-            if (_userRepository.UpdateUser(user)) {
+            if (_userRepository.UpdateUser(user))
+            {
                 _userRepository.SaveUser();
-                return View();
+                return View(user);
             }
             return Redirect("/");
         }
@@ -160,7 +154,87 @@ namespace TopLearn.Web.Controllers
             return View(loginViewModel);
 
         }
+        #endregion
 
+        #region ForgotPassword
+        [Route("ForgotPassword")]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public ActionResult ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            if (!(ModelState.IsValid))
+            {
+                ModelState.AddModelError("UserEmail", "ایمیل را وارد کنید");
+                return View(forgotPasswordViewModel);
+            }
+            var user = _userService.GetUserByEmail(forgotPasswordViewModel.UserEmail);
+            if (user == null)
+            {
+                ModelState.AddModelError("UserEmail", "این ایمیل یافت نشد");
+                return View(forgotPasswordViewModel);
+            }
+            string send = SendEmail.Send(user.UserEmail, "باز یابی کلمه عبور", _viewRenderService.RenderToStringAsync("_ForgotPassworEmail", user));
+            if (send != "1")
+            {
+                ModelState.AddModelError("UserEmail", "خطا در ارسال ایمیل بازیابی ");
+                return View(forgotPasswordViewModel);
+            }
+            ViewBag.isSucsses = true;
+            return View();
+        }
+
+        [Route("ResetPassword/{restPasswordCode}")]
+        public ActionResult ResetPassword(string restPasswordCode)
+        {
+            var user = _userService.GetUserByActiveCode(restPasswordCode);
+            if (user == null)
+                return View();
+            return View(new RestPasswordViewModel()
+            {
+                RestPasswordCode = restPasswordCode
+            });
+        }
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public ActionResult ResetPassword(RestPasswordViewModel restPasswordViewModel)
+        {
+            
+            if (!(ModelState.IsValid))
+                return View(restPasswordViewModel);
+        
+            if (restPasswordViewModel.UserPassword.Length < 5)
+            {
+                ModelState.AddModelError("UserPassword", "طول کلمه عبور باید بشتر از 5 کاراکتر باشد");
+                restPasswordViewModel.UserPassword = null;
+                restPasswordViewModel.UserConfigortionPassword = null;
+                return View(restPasswordViewModel);
+            }
+            if (restPasswordViewModel.UserPassword != restPasswordViewModel.UserConfigortionPassword)
+            {
+                ModelState.AddModelError("UserPassword", "کلمه عبور مغایرت دارد");
+                restPasswordViewModel.UserPassword = null;
+                restPasswordViewModel.UserConfigortionPassword = null;
+                return View(restPasswordViewModel);
+            }
+            var user = _userService.GetUserByActiveCode(restPasswordViewModel.RestPasswordCode);
+            if (user == null) {
+                ModelState.AddModelError("UserPassword", "این کاربر یافت نشد");
+                return View(restPasswordViewModel);
+            }
+            user.UserPassword = restPasswordViewModel.UserPassword.ToEncodePasswordMd5();
+            user.UserEmailConfigurationCode = TextTools.GenerateUniqCode();
+            if (!(_userRepository.UpdateUser(user))) {
+                ModelState.AddModelError("UserPassword", "خطا در بازیابی کلمه عبور ");
+                return View(restPasswordViewModel);
+            }
+            _userRepository.SaveUser();
+            return View("ResetPasswordSucsses");
+        }
         #endregion
     }
 }

@@ -31,7 +31,7 @@ namespace TopLearn.Utility.Sender
             try
             {
                 SmtpServer.Send(mail);
-                return "ایمیل ارسال شد";
+                return "1";
             }
             catch(Exception e) {
                 return e.Message.ToString();
