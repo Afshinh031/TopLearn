@@ -223,14 +223,16 @@ namespace TopLearn.Web.Controllers
             }
             var user = _userService.GetUserByActiveCode(restPasswordViewModel.RestPasswordCode);
             if (user == null) {
-                ModelState.AddModelError("UserPassword", "این کاربر یافت نشد");
-                return View(restPasswordViewModel);
+                return NotFound();
+                //ModelState.AddModelError("UserPassword", "این کاربر یافت نشد");
+                //return View(restPasswordViewModel);
+
             }
             user.UserPassword = restPasswordViewModel.UserPassword.ToEncodePasswordMd5();
             user.UserEmailConfigurationCode = TextTools.GenerateUniqCode();
             if (!(_userRepository.UpdateUser(user))) {
                 ModelState.AddModelError("UserPassword", "خطا در بازیابی کلمه عبور ");
-                return View(restPasswordViewModel);
+                return View(restPasswordViewModel);      
             }
             _userRepository.SaveUser();
             return View("ResetPasswordSucsses");
