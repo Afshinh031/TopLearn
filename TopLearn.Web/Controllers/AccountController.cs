@@ -119,13 +119,22 @@ namespace TopLearn.Web.Controllers
 
         #region Login
         [Route("Login")]
-        public ActionResult Login() => View();
+        public ActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/User/Profile");
+
+            return View();
+
+        }
 
 
         [Route("Login")]
         [HttpPost]
         public ActionResult Login(LoginViewModel loginViewModel)
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/User/Profile");
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("UserEmail", "نام کاربری و ایمیل را وراد کنید");
@@ -137,7 +146,7 @@ namespace TopLearn.Web.Controllers
                 var user = _userService.GetUserByEmail(loginViewModel.UserEmail);
                 var claims = new List<Claim>() {
                     new Claim(ClaimTypes.NameIdentifier,user.UserID.ToString()),
-                    new Claim(ClaimTypes.Name,(user.UserFristName==null)?"به فروشگاه ما": user.UserFristName+" ")
+                    new Claim(ClaimTypes.Name,(user.UserID.ToString()))
                 };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
@@ -147,7 +156,7 @@ namespace TopLearn.Web.Controllers
                     IsPersistent = loginViewModel.RemmeberMe
                 };
                 HttpContext.SignInAsync(principal, properties);
-                return Redirect("/");
+                return Redirect("/User/Profile");
             }
             ModelState.AddModelError("UserEmail", "کاربری با این مشخصات یافت نشد");
             loginViewModel.UserPassword = null;
@@ -203,10 +212,10 @@ namespace TopLearn.Web.Controllers
         [Route("ResetPassword")]
         public ActionResult ResetPassword(RestPasswordViewModel restPasswordViewModel)
         {
-            
+
             if (!(ModelState.IsValid))
                 return View(restPasswordViewModel);
-        
+
             if (restPasswordViewModel.UserPassword.Length < 5)
             {
                 ModelState.AddModelError("UserPassword", "طول کلمه عبور باید بشتر از 5 کاراکتر باشد");
@@ -222,17 +231,15 @@ namespace TopLearn.Web.Controllers
                 return View(restPasswordViewModel);
             }
             var user = _userService.GetUserByActiveCode(restPasswordViewModel.RestPasswordCode);
-            if (user == null) {
+            if (user == null)
                 return NotFound();
-                //ModelState.AddModelError("UserPassword", "این کاربر یافت نشد");
-                //return View(restPasswordViewModel);
 
-            }
             user.UserPassword = restPasswordViewModel.UserPassword.ToEncodePasswordMd5();
             user.UserEmailConfigurationCode = TextTools.GenerateUniqCode();
-            if (!(_userRepository.UpdateUser(user))) {
+            if (!(_userRepository.UpdateUser(user)))
+            {
                 ModelState.AddModelError("UserPassword", "خطا در بازیابی کلمه عبور ");
-                return View(restPasswordViewModel);      
+                return View(restPasswordViewModel);
             }
             _userRepository.SaveUser();
             return View("ResetPasswordSucsses");

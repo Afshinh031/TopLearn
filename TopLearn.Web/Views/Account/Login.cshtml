@@ -10,14 +10,14 @@
             <div class="controls">
                 <input asp-for="UserEmail" class="input-block-level" id="inputEmail" placeholder="نام کاربری یا ایمیل">
             </div>
-            <span asp-validation-for="UserEmail"></span>
+            <span asp-validation-for="UserEmail" class="text-error"></span>
         </div>
         <div class="control-group">
             <label class="control-label hidden shown-ie8" for="inputPassword">رمز عبور</label>
             <div class="controls">
                 <input asp-for="UserPassword" type="password" class="input-block-level" id="inputPassword" placeholder="رمز عبور">
             </div>
-            <span asp-validation-for="UserPassword"></span>
+            <span asp-validation-for="UserPassword" class="text-error"></span>
         </div>
         <div class="control-group">
             <div class="controls">
