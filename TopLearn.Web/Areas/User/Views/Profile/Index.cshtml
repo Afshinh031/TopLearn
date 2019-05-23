@@ -30,20 +30,20 @@
 
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src="~/User/images/user3-128x128.jpg" alt="User Avatar">
+                        <img class="img-circle" src="~/PorojectImg/@(Model.UserImage)" alt="User Avatar">
                     </div>
                     <div class="box-footer" style="padding: 36px 30px 10px 30px;">
                         <div class="row">
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>ایمیل</b> <a class="pull-left">@Model.UserEmail</a> 
+                                    <b>ایمیل</b> <a class="pull-left">@Model.UserEmail</a>
                                 </li>
                                 <li style="direction: ltr;" class="list-group-item">
                                     <b>تاریخ عضویت</b> <a class="pull-left">@Model.UserDateTime.ToShamsi()</a>
                                 </li>
                                 <li style="direction: ltr;" class="list-group-item">
                                     <b>تاریخ فعال سازی</b> <a class="pull-left">@Model.UserEmailConfigurationDateTime.ToShamsi()</a>
-                                </li> 
+                                </li>
 
                                 <li class="list-group-item">
                                     <b>نقش</b> <a class="pull-left">کاربر عادی</a>
@@ -61,59 +61,58 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
 
-                        <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">تنظیمات</a></li>
+                        <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">اطلاعات کاربری</a></li>
                     </ul>
                     <div class="tab-content">
 
 
                         <div class="tab-pane active" id="settings">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" asp-action="EditProfile">
+                                <input type="hidden" asp-for="UserID" />
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-2 control-label">نام کاربری</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="UserName" type="text" class="form-control" placeholder="نام کاربری">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="inputName" class="col-sm-2 control-label">نام</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputName" placeholder="نام">
+                                        <input asp-for="UserFristName" type="text" class="form-control" placeholder="نام">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail" class="col-sm-2 control-label">ایمیل</label>
+                                    <label for="inputEmail" class="col-sm-2 control-label">نام خانوادگی</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="ایمیل">
+                                        <input asp-for="UserLastName" type="text" class="form-control" placeholder="نام خانوادگی">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputFamily" class="col-sm-2 control-label">نام خانوادگی</label>
 
+                                <div class="form-group">
+                                    <label for="inputExperience" class="col-sm-2 control-label">درباره من </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputFamily" placeholder="نام خانوادگی">
+                                        <textarea asp-for="UserAbout" maxlength="500" class="form-control" rows="5" placeholder="درباره من "></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputExperience" class="col-sm-2 control-label">ویژگی ها</label>
+                                    <label for="inputSkills" class="col-sm-2 control-label">تاریخ تولد</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="ویژگی ها"></textarea>
+                                        <input asp-for="UserBirthday" type="text" class="form-control" placeholder="تاریخ تولد">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputSkills" class="col-sm-2 control-label">توانایی ها</label>
+                                    <label for="inputName" class="col-sm-2 control-label">تصویر</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputSkills" placeholder="توانایی ها">
+                                        <input asp-for="UserImage" type="file" class="form-control" />
                                     </div>
                                 </div>
+                                <div asp-validation-summary="All" class="text-error"></div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> من <a href="#">قوانین و شرایط</a> را قبول
-                                                میکنم.
-                                            </label>
-                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-lg">ذخیره</button>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">ارسال</button>
-                                    </div>
-                                </div>
+
                             </form>
                         </div>
                         <!-- /.tab-pane -->
@@ -127,4 +126,6 @@
     </section>
     <!-- /.content -->
 </div>
+@section Scripts {
 
+}

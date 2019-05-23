@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TopLearn.Core.Services.Interfaces;
 
+
 namespace TopLearn.Web.Areas.User.Controllers
 {
     [Area("User")]
@@ -23,5 +24,10 @@ namespace TopLearn.Web.Areas.User.Controllers
         {
             return View(_userService.GetUserById(Convert.ToInt32(User.Identity.Name)));
         }
+
+        public IActionResult EditProfile(TopLearn.DataLayer.Entities.User.User user) {
+            return View();
+        }
+
     }
 }

@@ -1,0 +1,6 @@
+﻿@using TopLearn.Core.Services.Interfaces
+@inject IUserService _userService
+
+@_userService.GetUserFristNameById(Convert.ToInt32(User.Identity.Name))
+ 
+@_userService.GetUserLastNameById(Convert.ToInt32(User.Identity.Name))

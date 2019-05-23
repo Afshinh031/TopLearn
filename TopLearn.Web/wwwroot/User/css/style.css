@@ -1,3 +1,6 @@
 /*CMS custom style*/
 /*start css reset*/
 /*end css reset*/
+textarea {
+    resize:none
+}

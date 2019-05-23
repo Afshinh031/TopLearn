@@ -24,10 +24,24 @@
                 </div>
                 <div class="top-right">
 
-                    <div class="register" id="reg_section">
-                        <a href="#loginModal" id="log" class="border-left " role="button" data-toggle="modal">ورود</a>
-                        <a href="#registerModal" id="reg" role="button" data-toggle="modal">ثبت نام</a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="register" id="reg_section">
+                            <a href="~/User/Profile/" id="log" class="border-left ">
+                                <partial name="_GetUserFristAndLastName" />
+                                خوش آمدید
+                            </a>
+                            <a href="/Logout/" title="خروج">خروج</a>
+                        </div>
+                    }
+                    else
+                    {
+
+                        <div class="register" id="reg_section">
+                            <a href="#loginModal" id="log" class="border-left " role="button" data-toggle="modal">ورود</a>
+                            <a href="#registerModal" id="reg" role="button" data-toggle="modal">ثبت نام</a>
+                        </div>
+                    }
                 </div>
             </div> <!-- /social icons -->
         </div>

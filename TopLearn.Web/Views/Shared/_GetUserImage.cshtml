@@ -1,0 +1,5 @@
+﻿@using TopLearn.Core.Services.Interfaces
+@inject IUserService _userService
+
+@_userService.GetUserImageById(Convert.ToInt32(User.Identity.Name))
+

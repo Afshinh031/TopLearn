@@ -49,6 +49,21 @@ namespace TopLearn.Core.Services.Service
         {
             return _context.Users.SingleOrDefault(u => u.UserEmailConfigurationCode == activeCode);
         }
+
+        public string GetUserFristNameById(int userId)
+        {
+           return _context.Users.Single(u => u.UserID == userId).UserFristName;
+        }
+
+        public string GetUserLastNameById(int userId)
+        {
+            return _context.Users.Single(u => u.UserID == userId).UserLastName;
+        }
+
+        public string GetUserImageById(int userId)
+        {
+            return _context.Users.Single(u => u.UserID == userId).UserImage;
+        }
     }
 
 

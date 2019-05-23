@@ -53,15 +53,18 @@
         <!--  ==========  -->
         <!--  = Modal Windows =  -->
         <!--  ==========  -->
-        <!--  = Login =  -->
-        <partial name="_LoginModal" />
+        @if (!(User.Identity.IsAuthenticated))
+        {
 
-        <!--  = Register =  -->
-        <partial name="_RegisterModal" />
+            <!--  = Login =  -->
+            <partial name="_LoginModal" />
 
-        <!--  = ForgotPasswordModal =  -->
-        <partial name="_ForgotPasswordModal" />
+            <!--  = Register =  -->
+            <partial name="_RegisterModal" />
 
+            <!--  = ForgotPasswordModal =  -->
+            <partial name="_ForgotPasswordModal" />
+        }
 
     </div> <!-- end of master-wrapper -->
     <!--  ==========  -->
