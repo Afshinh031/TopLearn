@@ -1,5 +1,5 @@
 ﻿@using TopLearn.Utility.Convertor
-@model TopLearn.DataLayer.Entities.User.User
+@model TopLearn.ViewModel.UserViewModels.UserViewModel
 @{
     ViewData["Title"] = "پروفایل کاربر";
 }
@@ -12,7 +12,7 @@
             <small></small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fas fa-user-tie"></i> @Model.UserFristName </a></li>
+            <li><a href="#"><i class="fas fa-user-tie"></i> @Model.UserModel.UserFristName </a></li>
             <li class="active">پروفایل</li>
         </ol>
     </section>
@@ -26,27 +26,27 @@
                 <div class="box box-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-black" style="background: url(/User/images/photo1.png) center center;">
-                        <h3 class="widget-user-username">@Model.UserFristName  @Model.UserLastName</h3>
+                        <h3 class="widget-user-username">@Model.UserModel.UserFristName  @Model.UserModel.UserLastName</h3>
 
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src="~/PorojectImg/@(Model.UserImage)" alt="User Avatar">
+                        <img class="img-circle" src="~/PorojectImg/UserImage/@Model.UserModel.UserImage" alt="@Model.UserModel.UserFristName">
                     </div>
                     <div class="box-footer" style="padding: 36px 30px 10px 30px;">
                         <div class="row">
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>ایمیل</b> <a class="pull-left">@Model.UserEmail</a>
+                                    <b>ایمیل</b> <a class="pull-left">@Model.UserModel.UserEmail</a>
                                 </li>
                                 <li style="direction: ltr;" class="list-group-item">
-                                    <b>تاریخ عضویت</b> <a class="pull-left">@Model.UserDateTime.ToShamsi()</a>
+                                    <b>تاریخ عضویت</b> <a class="pull-left">@Model.UserModel.UserDateTime.ToShamsi()</a>
                                 </li>
                                 <li style="direction: ltr;" class="list-group-item">
-                                    <b>تاریخ فعال سازی</b> <a class="pull-left">@Model.UserEmailConfigurationDateTime.ToShamsi()</a>
+                                    <b>تاریخ فعال سازی</b> <a class="pull-left">@Model.UserModel.UserEmailConfigurationDateTime.ToShamsi()</a>
                                 </li>
 
                                 <li class="list-group-item">
-                                    <b>نقش</b> <a class="pull-left">کاربر عادی</a>
+                                    <b>نقش</b> <a class="pull-left">@Model.UserModel.UserRol</a>
                                 </li>
                             </ul>
                         </div>
@@ -62,57 +62,103 @@
                     <ul class="nav nav-tabs">
 
                         <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">اطلاعات کاربری</a></li>
+                        <li><a href="#Password" data-toggle="tab" aria-expanded="true">تغییر کلمه عبور</a></li>
                     </ul>
                     <div class="tab-content">
 
 
                         <div class="tab-pane active" id="settings">
-                            <form class="form-horizontal" asp-action="EditProfile">
-                                <input type="hidden" asp-for="UserID" />
+                            <form class="form-horizontal" asp-action="EditProfile" method="post" enctype="multipart/form-data">
+                                @if (ViewBag.error != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        @ViewBag.error
+                                    </div>
+                                }
+                                <input type="hidden" asp-for="UserEditProFileViewModel.UserID" />
                                 <div class="form-group">
                                     <label for="inputName" class="col-sm-2 control-label">نام کاربری</label>
                                     <div class="col-sm-10">
-                                        <input asp-for="UserName" type="text" class="form-control" placeholder="نام کاربری">
+                                        <input asp-for="UserEditProFileViewModel.UserName" type="text" class="form-control" placeholder="نام کاربری">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName" class="col-sm-2 control-label">نام</label>
                                     <div class="col-sm-10">
-                                        <input asp-for="UserFristName" type="text" class="form-control" placeholder="نام">
+                                        <input asp-for="UserEditProFileViewModel.UserFristName" type="text" class="form-control" placeholder="نام">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail" class="col-sm-2 control-label">نام خانوادگی</label>
                                     <div class="col-sm-10">
-                                        <input asp-for="UserLastName" type="text" class="form-control" placeholder="نام خانوادگی">
+                                        <input asp-for="UserEditProFileViewModel.UserLastName" type="text" class="form-control" placeholder="نام خانوادگی">
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-sm-2 control-label"> ایمیل</label>
+                                    <div class="col-sm-10">
+                                        <input asp-for="UserEditProFileViewModel.UserEmail" type="text" class="form-control" placeholder="ایمیل ">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="inputExperience" class="col-sm-2 control-label">درباره من </label>
                                     <div class="col-sm-10">
-                                        <textarea asp-for="UserAbout" maxlength="500" class="form-control" rows="5" placeholder="درباره من "></textarea>
+                                        <textarea asp-for="UserEditProFileViewModel.UserAbout" maxlength="500" class="form-control" rows="5" placeholder="درباره من "></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputSkills" class="col-sm-2 control-label">تاریخ تولد</label>
                                     <div class="col-sm-10">
-                                        <input asp-for="UserBirthday" type="text" class="form-control" placeholder="تاریخ تولد">
+                                        <input asp-for="UserEditProFileViewModel.UserBirthday" type="text" class="form-control" placeholder="تاریخ تولد">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName" class="col-sm-2 control-label">تصویر</label>
                                     <div class="col-sm-10">
-                                        <input asp-for="UserImage" type="file" class="form-control" />
+                                        <input asp-for="UserEditProFileViewModel.UserImage" type="file" class="form-control" />
                                     </div>
                                 </div>
-                                <div asp-validation-summary="All" class="text-error"></div>
+                                <div asp-validation-summary="All" class="text-danger"></div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <button type="submit" class="btn btn-primary btn-lg">ذخیره</button>
                                     </div>
                                 </div>
 
+                            </form>
+                        </div>
+
+
+                        <div class="tab-pane active" id="Password">
+                            <form class="form-horizontal" asp-action="ChangePassword" method="post">
+                                <input type="hidden" asp-for="ChangePasswordViewModel.UserId" />
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label text-right">کلمه عبور قبلی</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="ChangePasswordViewModel.UserOldPassWord" type="password" class="form-control" placeholder="کلمه عبور قبلی">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label text-right">کلمه عبور جدید</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="ChangePasswordViewModel.UserNewPassword" type="password" class="form-control" placeholder="کلمه عبور جدید">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label text-right">تکرار کلمه عبور جدید</label>
+                                    <div class="col-sm-9">
+                                        <input asp-for="ChangePasswordViewModel.UserConfigortionNewPassword" type="password" class="form-control" placeholder="تکرار کلمه عبور جدید">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName" class="col-sm-3 control-label text-right"></label>
+                                    <div class="col-sm-9">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                    </div>
+                                </div>
+
+
+                                <input type="submit" class="btn btn-warning" value="تغییر کلمه عبور" />
                             </form>
                         </div>
                         <!-- /.tab-pane -->

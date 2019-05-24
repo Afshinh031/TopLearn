@@ -26,7 +26,7 @@ namespace TopLearn.DataLayer.Entities.User
 
 
         [Display(Name = "نام کاربری")]
-        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد .")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از 200 کاراکتر باشد .")]
         public string UserName { get; set; }
 
 

@@ -60,7 +60,7 @@ namespace TopLearn.Web.Controllers
                 return View(userRegisterViewModel);
             }
 
-            if (_userService.EmialIsExist(userRegisterViewModel.UserEmail))
+            if (_userService.UserEmialIsExist(userRegisterViewModel.UserEmail))
             {
                 ModelState.AddModelError("UserEmail", "ایمیل معتبر نمی باشد");
                 userRegisterViewModel.UserPassword = null;

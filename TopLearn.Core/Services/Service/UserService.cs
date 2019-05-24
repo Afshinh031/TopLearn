@@ -22,10 +22,10 @@ namespace TopLearn.Core.Services.Service
 
         public User GetUserById(int userId)
         {
-            return _context.Users.Single(u => u.UserID == userId);
+            return _context.Users.SingleOrDefault(u => u.UserID == userId);
         }
 
-        public bool EmialIsExist(string email)
+        public bool UserEmialIsExist(string email)
         {
             return _context.Users.Any(u => u.UserEmail == email);
         }
@@ -63,6 +63,11 @@ namespace TopLearn.Core.Services.Service
         public string GetUserImageById(int userId)
         {
             return _context.Users.Single(u => u.UserID == userId).UserImage;
+        }
+
+        public bool UserNameIsExist(string userName)
+        {
+            return _context.Users.Any(u => u.UserName == userName);
         }
     }
 

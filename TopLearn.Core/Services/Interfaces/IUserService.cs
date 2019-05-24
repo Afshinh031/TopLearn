@@ -9,13 +9,14 @@ namespace TopLearn.Core.Services.Interfaces
     public interface IUserService
     {
         User GetUserById(int userId);
-        bool EmialIsExist(string email);
+        bool UserEmialIsExist(string email);
         string GetUserFristNameById(int userId);
         string GetUserLastNameById(int userId);
         string GetUserImageById(int userId);
         User GetUserByEmail(string email);
         User GetUserByActiveCode(string activeCode);
         bool LoginUser(LoginViewModel login);
+        bool UserNameIsExist(string userName);
         void DisposeUser();
     }
 
