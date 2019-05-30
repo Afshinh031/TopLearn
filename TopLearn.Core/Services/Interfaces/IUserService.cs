@@ -8,7 +8,10 @@ namespace TopLearn.Core.Services.Interfaces
 {
     public interface IUserService
     {
+        List<UserModel> GetAllUser(int skip, int take,int userOnline);
+        List<UserInactiveViewModel> GetUsersInactive(int skip, int take);
         User GetUserById(int userId);
+        int UserCount(bool isActive);
         bool UserEmialIsExist(string email);
         string GetUserFristNameById(int userId);
         string GetUserLastNameById(int userId);

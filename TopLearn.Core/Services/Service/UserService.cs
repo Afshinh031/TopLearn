@@ -15,6 +15,10 @@ namespace TopLearn.Core.Services.Service
     {
         private TopLearnContext _context;
 
+        public int UserCount(bool isActive) {
+            return _context.Users.Where(u => u.UserIsActive == isActive).Count();
+        }
+
         public UserService(TopLearnContext context)
         {
             _context = context;
@@ -37,7 +41,7 @@ namespace TopLearn.Core.Services.Service
 
         public bool LoginUser(LoginViewModel login)
         {
-            return _context.Users.Any(u => u.UserEmail == login.UserEmail && u.UserPassword==login.UserPassword.ToEncodePasswordMd5() && u.UserIsActive==true);
+            return _context.Users.Any(u => u.UserEmail == login.UserEmail && u.UserPassword == login.UserPassword.ToEncodePasswordMd5() && u.UserIsActive == true);
         }
 
         public User GetUserByEmail(string email)
@@ -52,7 +56,7 @@ namespace TopLearn.Core.Services.Service
 
         public string GetUserFristNameById(int userId)
         {
-           return _context.Users.Single(u => u.UserID == userId).UserFristName;
+            return _context.Users.Single(u => u.UserID == userId).UserFristName;
         }
 
         public string GetUserLastNameById(int userId)
@@ -68,6 +72,37 @@ namespace TopLearn.Core.Services.Service
         public bool UserNameIsExist(string userName)
         {
             return _context.Users.Any(u => u.UserName == userName);
+        }
+
+        public List<UserInactiveViewModel> GetUsersInactive(int skip, int take)
+        {
+            return _context.Users.Where(u => u.UserIsActive == false).Select(u => new UserInactiveViewModel
+            {
+                UserDateTime = u.UserDateTime,
+                UserDescription = u.UserDescription,
+                UserEmail = u.UserEmail,
+                UserId = u.UserID,
+                UserLastUpdateDateTime = u.UserLastUpdateDateTime
+            }).OrderByDescending(o => o.UserDateTime).Skip(skip).Take(take).ToList();
+        }
+
+        public List<UserModel> GetAllUser(int skip, int take, int userOnline)
+        {
+            return _context.Users.Where(u=>u.UserID != userOnline).Select(u => new UserModel
+            {
+                UserId = u.UserID,
+                UserEmail = u.UserEmail,
+                UserFristName = u.UserFristName,
+                UserLastName = u.UserLastName,
+                UserBirthday = u.UserBirthday,
+                UserDateTime = u.UserDateTime,
+                UserEmailConfigurationDateTime = u.UserEmailConfigurationDateTime,
+                UserImage = u.UserImage,
+                UserIsActive = u.UserIsActive,
+                UserName = u.UserName,
+                UserRol = "کاربر",
+                UserAbout = u.UserAbout
+            }).OrderByDescending(o => o.UserDateTime).Skip(skip).Take(take).ToList();
         }
     }
 

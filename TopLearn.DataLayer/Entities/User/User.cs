@@ -67,12 +67,17 @@ namespace TopLearn.DataLayer.Entities.User
         [Display(Name = "تاریخ ثبت نام")]
         public DateTime UserDateTime { get; set; }
 
+        [Display(Name = "توضیحات")]
+        [MaxLength(250, ErrorMessage = "{0}نمیتواند بیشتر از 250 کاراکتر باشد")]
+        public string UserDescription { get; set; }
+
+        [Display(Name = "تاریخ آخرین ویرایش")]
+        public DateTime UserLastUpdateDateTime { get; set; }
+
         #region Relations
 
         public virtual List<UserRole> UserRoles { get; set; }
 
         #endregion
-
-
     }
 }

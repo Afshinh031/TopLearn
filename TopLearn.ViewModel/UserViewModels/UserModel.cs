@@ -6,9 +6,11 @@ using System.Text;
 
 namespace TopLearn.ViewModel.UserViewModels
 {
+    #region UserPanel
     public class UserModel
     {
 
+        public int UserId { get; set; }
         public string UserFristName { get; set; }
 
         public string UserLastName { get; set; }
@@ -67,5 +69,22 @@ namespace TopLearn.ViewModel.UserViewModels
         public UserEditProFileViewModel UserEditProFileViewModel { get; set; }
         public ChangePasswordViewModel ChangePasswordViewModel { get; set; }
     }
+    #endregion
 
+    #region AdminPanel
+    public class UserInactiveViewModel {
+        public int UserId { get; set; }
+        public string UserEmail { get; set; }
+        public string UserDescription { get; set; }
+        public DateTime UserDateTime { get; set; }
+        public DateTime UserLastUpdateDateTime { get; set; }
+    }
+
+    public class UserAdminPanelViewModel {
+        public List<UserInactiveViewModel> UserInactiveViewModel { get; set; }
+        public List<UserModel> UserModel { get; set; }
+        public int UserInactiveCount { get; set; }
+        public int UserCount { get; set; }
+    }
+    #endregion
 }

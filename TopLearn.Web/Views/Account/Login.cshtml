@@ -5,6 +5,7 @@
 }
 <div class="loginView">
     <form method="post" asp-controller="Account" asp-action="Login">
+        <input type="hidden" asp-for="ReturnUrl" value="@ViewData["ReturnUrl"]"/>
         <div class="control-group">
             <label class="control-label hidden shown-ie8" for="inputEmail">نام کاربری</label>
             <div class="controls">

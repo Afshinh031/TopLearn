@@ -80,6 +80,8 @@ namespace TopLearn.Web.Controllers
                 UserDateTime = DateTime.Now,
                 UserPassword = userRegisterViewModel.UserPassword.ToEncodePasswordMd5(),
                 UserEmail = userRegisterViewModel.UserEmail.FixEmail(),
+                UserLastUpdateDateTime= DateTime.Now,
+                UserDescription ="ثیت نام",
             };
             if (!(_userRepository.InsertUser(user)))
             {
@@ -119,11 +121,11 @@ namespace TopLearn.Web.Controllers
 
         #region Login
         [Route("Login")]
-        public ActionResult Login()
+        public ActionResult Login(string ReturnUrl = "/User/Profile")
         {
             if (User.Identity.IsAuthenticated)
                 return Redirect("/User/Profile");
-
+            ViewData["ReturnUrl"]= ReturnUrl;
             return View();
 
         }
@@ -156,7 +158,9 @@ namespace TopLearn.Web.Controllers
                     IsPersistent = loginViewModel.RemmeberMe
                 };
                 HttpContext.SignInAsync(principal, properties);
-                return Redirect("/User/Profile");
+                if (loginViewModel.ReturnUrl == null || loginViewModel.ReturnUrl == "")
+                    loginViewModel.ReturnUrl = "/User/Profile";
+                return Redirect(loginViewModel.ReturnUrl);
             }
             ModelState.AddModelError("UserEmail", "کاربری با این مشخصات یافت نشد");
             loginViewModel.UserPassword = null;

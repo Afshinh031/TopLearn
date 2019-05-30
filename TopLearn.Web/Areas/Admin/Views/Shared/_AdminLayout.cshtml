@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> @ViewData["Title"] </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <partial name="_AdminStyle"/>
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini">پنل</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>کنترل پنل مدیریت</b></span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="/Panel/images/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="hidden-xs">افشین حیدری</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="/Panel/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <p>
+                                        افشین حیدری
+                                        <small>مدیریت کل سایت</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-info btn-flat">پروفایل</a>
+                                    </div>
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-danger btn-flat">خروج</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- right side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-right image">
+                        <img src="/Panel/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-right info">
+                        <p>افشین حیدری</p>
+                    </div>
+                </div>
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="جستجو">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">منو</li>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa fa-dashboard"></i> <span>داشبرد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="widgets.html">
+                            <i class="fas fa-store"></i><span>فروشگاه ها</span>
+                            <span class="pull-left-container">
+                                <small class="label pull-left bg-green">جدید</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html">
+                            <i class="fas fa-shopping-cart"></i> <span>محصولات</span>
+                            <span class="pull-left-container">
+                                <small class="label pull-left bg-yellow">۱۲</small>
+                                <small class="label pull-left bg-green">۱۶</small>
+                                <small class="label pull-left bg-red">۵</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Admin/Users">
+                            <i class="fas fa-users"></i> <span>کاربران</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer text-center">
+            <strong>تمام حقوق برای <a href="#"> CMS </a> محفوظ است</strong>
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <partial name="_AdminScript"/>
+</body>
+</html>

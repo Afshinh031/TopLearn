@@ -21,7 +21,6 @@ namespace TopLearn.ViewModel.UserViewModels
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد .")]
         [MinLength(6, ErrorMessage = "{0} نمیتواند کمتر از 6 کاراکتر باشد")]
-
         public string UserPassword { get; set; }
 
 
@@ -30,7 +29,6 @@ namespace TopLearn.ViewModel.UserViewModels
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد .")]
         [Compare("UserPassword", ErrorMessage = "کلمه های عبور مغایرت دارند")]
         [MinLength(6, ErrorMessage = "{0} نمیتواند کمتر از 6 کاراکتر باشد")]
-
         public string UserConfigortionPassword { get; set; }
     }
 
@@ -53,6 +51,8 @@ namespace TopLearn.ViewModel.UserViewModels
 
         [Display(Name = "مرا بخواطر بسپار")]
         public bool RemmeberMe { get; set; }
+
+        public string ReturnUrl{ get; set; }
 
     }
 
